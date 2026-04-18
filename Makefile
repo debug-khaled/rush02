@@ -1,7 +1,8 @@
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = rush-02
-SRC = main.c dict.c parsing.c print.c
+SRC = main.c dict.c parsing.c print.c solve.c utils.c master.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

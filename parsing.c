@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: khisleem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/18 12:20:44 by khisleem          #+#    #+#             */
+/*   Updated: 2026/04/18 12:21:21 by khisleem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "team.h"
 
 int	count_lines(char *buffer)
@@ -19,9 +30,9 @@ int	count_lines(char *buffer)
 char	*ft_strndup(char *str, int n)
 {
 	char	*dest;
-	int	i;
+	int		i;
 
-	dest = (char *)malloc(sizeof(char) * (n + 1))
+	dest = (char *)malloc(sizeof(char) * (n + 1));
 	if (!dest)
 		return (NULL);
 	i = 0;
@@ -37,12 +48,12 @@ char	*ft_strndup(char *str, int n)
 t_dict	*parse(char *buffer)
 {
 	t_dict	*dict;
-	int	i;
-	int	j;
-	int	start;
+	int		i;
+	int		j;
+	int		start;
 
-	dect = malloc(sizeof(t_dict) * (count_lines(buffer) + 1));
-	if (!dect)
+	dict = malloc(sizeof(t_dict) * (count_lines(buffer) + 1));
+	if (!dict)
 		return (NULL);
 	i = 0;
 	j = 0;
@@ -51,11 +62,11 @@ t_dict	*parse(char *buffer)
 		while (buffer[i] == '\n')
 			i++;
 		if (!buffer[i])
-			break;
+			break ;
 		start = i;
 		while (buffer[i] >= '0' && buffer[i] <= '9')
 			i++;
-		dict[j].number = ft+strndup(&buffer[start], i - start);
+		dict[j].number = ft_strndup(&buffer[start], i - start);
 		while (buffer[i] == ' ')
 			i++;
 		if (buffer[i] == ':')
@@ -65,29 +76,10 @@ t_dict	*parse(char *buffer)
 		start = i;
 		while (buffer[i] && buffer[i] != '\n')
 			i++;
-		dict.word = ft_strndup(buffer[start], i - start);
+		dict[j].word = ft_strndup(&buffer[start], i - start);
 		j++;
 	}
 	dict[j].number = NULL;
+	dict[j].word = NULL;
 	return (dict);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

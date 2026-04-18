@@ -1,16 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: khisleem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/18 12:18:43 by khisleem          #+#    #+#             */
+/*   Updated: 2026/04/18 13:43:51 by khisleem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "team.h"
-
-void	putstr(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		write (1, &str[i], 1);
-		i++;
-	}
-}
 
 int	is_valid(char *str)
 {
@@ -34,13 +33,14 @@ int	main(int argc, char **argv)
 {
 	char	*dict_path;
 	char	*number;
+	char	*buffer;
+	t_dict	*dict;
 
 	if (argc == 2)
 	{
-		dict_path = "dict.name";
+		dict_path = "numbers.dict";
 		number = argv[1];
 	}
-// بهاي الحالة يعني بنكون حطينا الديكشنري الجديد الي نشتغل عليه
 	else if (argc == 3)
 	{
 		dict_path = argv[1];
@@ -48,24 +48,29 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		putstr("Error\n");
+		ft_putstr("Error\n");
 		return (1);
 	}
+	if (!is_valid(number))
+	{
+		ft_putstr("Error\n");
+		return (1);
+	}
+	buffer = read_dict_file(dict_path);
+	if (!buffer)
+	{
+		ft_putstr("Dict Error\n");
+		return (1);
+	}
+	dict = parse(buffer);
+	free(buffer);
+	if (!dict)
+	{
+		ft_putstr("Dict Error\n");
+		return (1);
+	}
+	master_solver(number, dict);
+	ft_putstr("\n");
+	free_dict(dict);
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

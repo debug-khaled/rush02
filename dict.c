@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dict.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: khisleem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/18 12:05:19 by khisleem          #+#    #+#             */
+/*   Updated: 2026/04/18 12:18:18 by khisleem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "team.h"
 
 int	file_size(char *dict_path)
 {
-	int	fd;
-	int	size;
 	char	c;
+	int		fd;
+	int		size;
 
 	size = 0;
 	fd = open(dict_path, O_RDONLY);
@@ -16,20 +27,20 @@ int	file_size(char *dict_path)
 	return (size);
 }
 
-char	*read_file(char *dict_path)
+char	*read_dict_file(char *dict_path)
 {
-	int	fd;
-	int	size;
+	int		fd;
+	int		size;
 	char	*buffer;
 
 	size = file_size(dict_path);
 	if (size <= 0)
 		return (NULL);
-	buffer = (char *)malloc(sizeof(char)) * (size + 1));
+	buffer = (char *)malloc(sizeof(char) * (size + 1));
 	if (!buffer)
 		return (NULL);
 	fd = open(dict_path, O_RDONLY);
-	if (fd == = -1)
+	if (fd == -1)
 	{
 		free(buffer);
 		return (NULL);
@@ -39,19 +50,3 @@ char	*read_file(char *dict_path)
 	close(fd);
 	return (buffer);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

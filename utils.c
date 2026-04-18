@@ -1,42 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khisleem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/18 14:43:07 by khisleem          #+#    #+#             */
-/*   Updated: 2026/04/18 14:43:24 by khisleem         ###   ########.fr       */
+/*   Created: 2026/04/18 12:46:21 by khisleem          #+#    #+#             */
+/*   Updated: 2026/04/18 12:47:23 by khisleem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "team.h"
 
-char	*find_value(t_dict *dict, char *number_find)
+void	ft_putstr(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (dict[i].number != NULL)
+	while (str[i] != '\0')
 	{
-		if (ft_strcmp(dict[i].number, number_find) == 0)
-			return (dict[i].word);
+		write (1, &str[i], 1);
 		i++;
 	}
-	return (NULL);
 }
 
-void	free_dict(t_dict *dict)
+int	ft_strcmp(char *s1, char *s2)
 {
 	int	i;
 
 	i = 0;
-	if (!dict)
-		return ;
-	while (dict[i].number != NULL)
-	{
-		free(dict[i].number);
-		free(dict[i].word);
-	}
-	free(dict);
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
