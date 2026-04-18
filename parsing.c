@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: khisleem <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/18 12:20:44 by khisleem          #+#    #+#             */
-/*   Updated: 2026/04/18 12:21:21 by khisleem         ###   ########.fr       */
-/*                                                                            */
+/* */
+/* :::      ::::::::   */
+/* parsing.c                                          :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: khisleem <marvin@42.fr>                    +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2026/04/18 12:20:44 by khisleem          #+#    #+#             */
+/* Updated: 2026/04/18 12:21:21 by khisleem         ###   ########.fr       */
+/* */
 /* ************************************************************************** */
 #include "team.h"
 
@@ -45,12 +45,31 @@ char	*ft_strndup(char *str, int n)
 	return (dest);
 }
 
+void	extract_line_data(t_dict *dict, char *buffer, int *i, int j)
+{
+	int	start;
+
+	start = *i;
+	while (buffer[*i] >= '0' && buffer[*i] <= '9')
+		(*i)++;
+	dict[j].number = ft_strndup(&buffer[start], *i - start);
+	while (buffer[*i] == ' ')
+		(*i)++;
+	if (buffer[*i] == ':')
+		(*i)++;
+	while (buffer[*i] == ' ')
+		(*i)++;
+	start = *i;
+	while (buffer[*i] && buffer[*i] != '\n')
+		(*i)++;
+	dict[j].word = ft_strndup(&buffer[start], *i - start);
+}
+
 t_dict	*parse(char *buffer)
 {
 	t_dict	*dict;
 	int		i;
 	int		j;
-	int		start;
 
 	dict = malloc(sizeof(t_dict) * (count_lines(buffer) + 1));
 	if (!dict)
@@ -63,20 +82,7 @@ t_dict	*parse(char *buffer)
 			i++;
 		if (!buffer[i])
 			break ;
-		start = i;
-		while (buffer[i] >= '0' && buffer[i] <= '9')
-			i++;
-		dict[j].number = ft_strndup(&buffer[start], i - start);
-		while (buffer[i] == ' ')
-			i++;
-		if (buffer[i] == ':')
-			i++;
-		while (buffer[i] == ' ')
-			i++;
-		start = i;
-		while (buffer[i] && buffer[i] != '\n')
-			i++;
-		dict[j].word = ft_strndup(&buffer[start], i - start);
+		extract_line_data(dict, buffer, &i, j);
 		j++;
 	}
 	dict[j].number = NULL;

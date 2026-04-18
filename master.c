@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   master.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: khisleem <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/18 13:01:42 by khisleem          #+#    #+#             */
-/*   Updated: 2026/04/18 13:34:28 by khisleem         ###   ########.fr       */
-/*                                                                            */
+/* */
+/* :::      ::::::::   */
+/* master.c                                           :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: khisleem <marvin@42.fr>                    +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2026/04/18 13:01:42 by khisleem          #+#    #+#             */
+/* Updated: 2026/04/18 13:34:28 by khisleem         ###   ########.fr       */
+/* */
 /* ************************************************************************** */
 #include "team.h"
 
@@ -46,12 +46,33 @@ void	print_massive(int zeros, t_dict *dict)
 	free(key);
 }
 
-void	master_solver(char *str, t_dict *dict)
+void	process_chunk(char *str, int len, int block_len, t_dict *dict)
 {
-	int		len;
-	int		block_len;
 	char	block[4];
 	int		i;
+
+	i = 0;
+	while (i < block_len)
+	{
+		block[i] = str[i];
+		i++;
+	}
+	block[i] = '\0';
+	if (!is_all_zeros(block, block_len))
+	{
+		print_block(block, dict);
+		if (len > 3)
+			print_massive(len - block_len, dict);
+		if (len - block_len > 0
+			&& !is_all_zeros(str + block_len, len - block_len))
+			ft_putstr(" ");
+	}
+}
+
+void	master_solver(char *str, t_dict *dict)
+{
+	int	len;
+	int	block_len;
 
 	len = ft_strlen(str);
 	if (len == 1 && str[0] == '0')
@@ -64,22 +85,7 @@ void	master_solver(char *str, t_dict *dict)
 		block_len = len % 3;
 		if (block_len == 0)
 			block_len = 3;
-		i = 0;
-		while (i < block_len)
-		{
-			block[i] = str[i];
-			i++;
-		}
-		block[i] = '\0';
-		if ((!is_all_zeros(block, block_len)))
-		{
-			print_block(block, dict);
-			if (len > 3)
-				print_massive(len - block_len, dict);
-			if (len - block_len > 0
-				&& !is_all_zeros (str + block_len,len - block_len))
-				ft_putstr(" ");
-		}
+		process_chunk(str, len, block_len, dict);
 		str = str + block_len;
 		len = len - block_len;
 	}
