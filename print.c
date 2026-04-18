@@ -37,6 +37,7 @@ void	free_dict(t_dict *dict)
 	{
 		free(dict[i].number);
 		free(dict[i].word);
+		i++;
 	}
 	free(dict);
 }

@@ -54,7 +54,7 @@ void	print_two_digits(char *str, t_dict *dict)
 	{
 		print_ten(str[0], dict);
 		if (str[0] != '0' && str[1] != '0')
-			ft_putstr(" ");
+			ft_putstr("-");
 		print_unit(str[1], dict);
 	}
 }
@@ -71,7 +71,7 @@ void	print_block(char *block, t_dict *dict)
 			print_unit(block[0], dict);
 			ft_putstr(" ");
 			ft_putstr(find_value(dict, "100"));
-			if (block[1] != '0' && block[2] != '0')
+			if (block[1] != '0' || block[2] != '0')
 				ft_putstr(" ");
 		}
 		print_two_digits(block +1, dict);
